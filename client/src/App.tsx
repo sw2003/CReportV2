@@ -87,7 +87,7 @@ function App() {
           formData.append('report', formData1.file);
         }
 
-        fetch('http://localhost:4000/api/compute', {method: 'POST', body: formData})
+        fetch('http://cbookingreport.com/api/compute', {method: 'POST', body: formData})
           .then((res)=>res.blob())
           .then((blob: any)=>{
             const url = window.URL.createObjectURL(
