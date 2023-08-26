@@ -18,8 +18,8 @@ const theme = createTheme({
 });
 
 interface formInfo {
-  filename: string, 
-  file: File 
+  filename: string,
+  file: File
 }
 
 interface fileType {
@@ -74,39 +74,49 @@ function App() {
 
     if (formData1Length !== 0 && formData2Length !== 0) {
 
-      if ('file' in formData1 && 'file' in formData2){
-        const fileOptions = await fileCheck.default(formData1, formData2, setError); 
+      if ('file' in formData1 && 'file' in formData2) {
+        const fileOptions = await fileCheck.default(formData1, formData2, setError);
         const formData = new FormData();
 
-        if (fileOptions.raw === 'file1'){
+        if (fileOptions.raw === 'file1') {
           formData.append('raw', formData1.file);
-          formData.append('report', formData2.file); 
+          formData.append('report', formData2.file);
         }
-        else if (fileOptions.raw === 'file2'){
-          formData.append('raw', formData2.file); 
+        else if (fileOptions.raw === 'file2') {
+          formData.append('raw', formData2.file);
           formData.append('report', formData1.file);
         }
 
-        fetch('http://cbookingreport.com/api/compute', {method: 'POST', body: formData})
-          .then((res)=>res.blob())
-          .then((blob: any)=>{
-            const url = window.URL.createObjectURL(
-              new Blob([blob]),
-            );
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute(
-              'download',
-              `report.xlsx`,
-            );
-        
-            // Append to html link element page
-            document.body.appendChild(link);
-            link.click();
-            // Clean up and remove the link
+        let link;
 
-            link.parentNode?.removeChild(link);
-          })
+        try {
+          fetch('http://localhost:4000/api/compute', { method: 'POST', body: formData })
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error('Something went wrong...');
+              }
+              else {
+                return res.blob()
+              }
+            })
+            .then((blob) => {
+              const url = window.URL.createObjectURL(new Blob([blob]));
+              let link = document.createElement('a');
+              link.href = url;
+              link.setAttribute(
+                'download',
+                `report.xlsx`,
+              );
+              document.body.appendChild(link);
+              link.click();
+              link.parentNode?.removeChild(link);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     else {

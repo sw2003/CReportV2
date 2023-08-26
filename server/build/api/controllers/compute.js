@@ -31,19 +31,16 @@ function compute(req, res) {
         const file1Path = path_1.default.join(process.cwd(), `/uploads/${file1Data.filename}`);
         const file2Path = path_1.default.join(process.cwd(), `/uploads/${file2Data.filename}`);
         try {
+            console.log(1);
             const report = yield mainLoop(file1Path, file2Path);
-            /*
-            const bufferData = Buffer.from(report);
-            const filePath = './output.xlsx';
-            fs.writeFileSync(filePath, bufferData);
-            */
-            res.attachment('output.xlsx');
-            res.send(report);
-            res.status(200);
+            res.status(200).send(report);
         }
         catch (error) {
+            console.log(2);
             console.log(error);
-            res.status(404);
+            fs_1.default.unlink(file1Path, (error) => { });
+            fs_1.default.unlink(file2Path, (error) => { });
+            res.status(500).json({ errorMessage: 'Bruh Chain' });
         }
     });
 }
@@ -80,7 +77,7 @@ function mainLoop(file1Path, file2Path) {
             return report;
         }
         catch (error) {
-            throw new Error('Error in main loop');
+            throw error;
         }
     });
 }
@@ -250,12 +247,16 @@ function fillData(fullName, sheet, startingIndex, columns) {
         return;
     }
     const letterArr = ['L', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
-    for (let i = 0; i < letterArr.length; i++) {
-        const cellStyle = sheet.cell(`${letterArr[i]}${startingIndex}`).style('fill');
-        if (cellStyle && Number(cellStyle.color.tint) < -0.05 && columns[i] === 0) {
-            columns[i] = null;
+    try {
+        for (let i = 0; i < letterArr.length; i++) {
+            const cellStyle = sheet.cell(`${letterArr[i]}${startingIndex}`).style('fill');
+            if (cellStyle && Number(cellStyle.color.tint) < -0.05 && columns[i] === 0) {
+                columns[i] = null;
+            }
+            sheet.cell(`${letterArr[i]}${startingIndex}`).value(columns[i]);
         }
-        sheet.cell(`${letterArr[i]}${startingIndex}`).value(columns[i]);
+    }
+    catch (error) {
     }
 }
 exports.fillData = fillData;

@@ -46,20 +46,21 @@ export default async function compute(req: Request, res: Response) {
 
 
     try {
+        console.log(1); 
+
         const report = await mainLoop(file1Path, file2Path);
 
-        /*
-        const bufferData = Buffer.from(report);
-        const filePath = './output.xlsx';
-        fs.writeFileSync(filePath, bufferData);
-        */ 
-
-        res.attachment('output.xlsx');
-        res.send(report); 
-        res.status(200); 
+        res.status(200).send(report); 
     } catch (error) {
+        console.log(2);
+
         console.log(error);
-        res.status(404);
+
+        fs.unlink(file1Path, (error)=>{});
+        fs.unlink(file2Path, (error)=>{});   
+
+
+        res.status(500).json({errorMessage: 'Bruh Chain'});
     }
 }
 
@@ -103,7 +104,7 @@ export async function mainLoop(file1Path: string, file2Path: string){
         const report = workbook_p.outputAsync()  
         return report
     } catch (error) {
-        throw new Error('Error in main loop')
+        throw error
     }
 }
 
@@ -301,11 +302,14 @@ export function fillData(fullName: string, sheet: Sheet, startingIndex: number, 
 
     const letterArr: string[] = ['L', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
 
-    for (let i = 0; i<letterArr.length; i++){
-        const cellStyle = sheet.cell(`${letterArr[i]}${startingIndex}`).style('fill'); 
-        if (cellStyle && Number(cellStyle.color.tint) < -0.05 && columns[i] === 0){
-            columns[i] = null; 
-        }
-        sheet.cell(`${letterArr[i]}${startingIndex}`).value(columns[i])
+    try {
+        for (let i = 0; i<letterArr.length; i++){
+            const cellStyle = sheet.cell(`${letterArr[i]}${startingIndex}`).style('fill'); 
+            if (cellStyle && Number(cellStyle.color.tint) < -0.05 && columns[i] === 0){
+                columns[i] = null; 
+            }
+            sheet.cell(`${letterArr[i]}${startingIndex}`).value(columns[i])
+        }        
+    } catch (error) {
     }
 }
