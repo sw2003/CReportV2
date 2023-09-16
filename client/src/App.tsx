@@ -89,8 +89,11 @@ function App() {
 
         let link;
 
+        const productionURL = 'https://cbookingreport.com/api/compute'
+        const localURL = 'http://localhost:4000/api/compute'
+
         try {
-          fetch('http://localhost:4000/api/compute', { method: 'POST', body: formData })
+          fetch(localURL, { method: 'POST', body: formData })
             .then((res) => {
               if (!res.ok) {
                 throw new Error('Something went wrong...');

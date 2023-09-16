@@ -15,14 +15,13 @@ interface shipData {
     B: string;
     C: string;
     D: string;
-    E: string;
-    F: string | undefined;
+    E: string | undefined;
+    F: number;
     G: number;
     H: number;
     I: number;
     J: number;
     K: number;
-    L: number;
 }
 
 // Globals
@@ -46,13 +45,12 @@ export default async function compute(req: Request, res: Response) {
 
 
     try {
-        console.log(1); 
-
         const report = await mainLoop(file1Path, file2Path);
 
         res.status(200).send(report); 
+
+        res.status(200); 
     } catch (error) {
-        console.log(2);
 
         console.log(error);
 
@@ -67,13 +65,18 @@ export default async function compute(req: Request, res: Response) {
 // Iterates through both sheets collecting and aggregating data 
 export async function mainLoop(file1Path: string, file2Path: string){
     try {
+
         // xlsx variables
+
+        
         var workbook: xlsx.WorkBook = xlsx.readFile(file1Path);
         var sheet: xlsx.Sheet = workbook.Sheets['Data'];
         var arr: shipData[] = xlsx.utils.sheet_to_json(sheet, { header: 'A' });
-
+        
         // xlsxpopulate variables
+
         const workbook_p: Workbook = await xlsxpopulate.fromFileAsync(file2Path);
+        
         const sheet_p: Sheet = workbook_p.activeSheet();
 
         let startingIndex: number = 6;
@@ -81,7 +84,10 @@ export async function mainLoop(file1Path: string, file2Path: string){
 
         let name: nameType | undefined = ''
 
+        let counter = 0;
+
         do {
+            counter++;
             name = sheet_p.cell(`A${startingIndex}`).value();
 
             if (typeof name === "string" && name?.replace(/\s/g, "") === 'SUBTOTAL') {
@@ -103,6 +109,8 @@ export async function mainLoop(file1Path: string, file2Path: string){
 
         const report = workbook_p.outputAsync()  
         return report
+        
+
     } catch (error) {
         throw error
     }
@@ -117,123 +125,123 @@ export function innerLoop(arr: shipData[], fullName: string, startingIndex: numb
         const bookingOfficeCode: string = data.A;
         const dataFileFullName: string = data.D.split(' ')[0];
         const pol: string = data.C;
-        const eMedia: string = data?.F as string;
-
+        //const eMedia: string = data?.F as string;
+        const eMedia: string = data?.E as string; 
 
         if (fullName === dataFileFullName) {
             if (bookingOfficeCode === 'VAN') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[1] += data.G
-                    columns[2] += data.L
+                    columns[1] += data.F
+                    columns[2] += data.K
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[0] += data.G
-                    columns[2] += data.L
+                    columns[0] += data.F
+                    columns[2] += data.K
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.G
-                    columns[11] += data.L
+                    columns[9] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[1] += data.G
-                    columns[2] += data.L
+                    columns[1] += data.F
+                    columns[2] += data.K
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[1] += data.G
-                    columns[2] += data.L
+                    columns[1] += data.F
+                    columns[2] += data.K
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
             }
             else if (bookingOfficeCode === 'MTR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[4] += data.G
-                    columns[5] += data.L
+                    columns[4] += data.F
+                    columns[5] += data.K
                 }
 
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[3] += data.G
-                    columns[5] += data.L
+                    columns[3] += data.F
+                    columns[5] += data.K
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.G
-                    columns[11] += data.L
+                    columns[9] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[4] += data.G
-                    columns[5] += data.L
+                    columns[4] += data.F
+                    columns[5] += data.K
                 }
 
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[4] += data.G
-                    columns[5] += data.L
+                    columns[4] += data.F
+                    columns[5] += data.K
                 }
 
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
             }
             else if (bookingOfficeCode === 'TOR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[7] += data.G
-                    columns[8] += data.L
+                    columns[7] += data.F
+                    columns[8] += data.K
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[6] += data.G
-                    columns[8] += data.L
+                    columns[6] += data.F
+                    columns[8] += data.K
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.G
-                    columns[11] += data.L
+                    columns[9] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[7] += data.G
-                    columns[8] += data.L
+                    columns[7] += data.F
+                    columns[8] += data.K
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[7] += data.G
-                    columns[8] += data.L
+                    columns[7] += data.F
+                    columns[8] += data.K
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.G
-                    columns[11] += data.L
+                    columns[10] += data.F
+                    columns[11] += data.K
                 }
             }
         }
