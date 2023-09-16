@@ -93,7 +93,7 @@ function App() {
         const localURL = 'http://localhost:4000/api/compute'
 
         try {
-          fetch(localURL, { method: 'POST', body: formData })
+          fetch(productionURL, { method: 'POST', body: formData })
             .then((res) => {
               if (!res.ok) {
                 throw new Error('Something went wrong...');
