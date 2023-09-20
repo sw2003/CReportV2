@@ -52,7 +52,6 @@ function mainLoop(file1Path, file2Path) {
             var workbook = xlsx_1.default.readFile(file1Path);
             var sheet = workbook.Sheets['Data'];
             var arr = xlsx_1.default.utils.sheet_to_json(sheet, { header: 'A' });
-            console.log(arr);
             // xlsxpopulate variables
             const workbook_p = yield xlsx_populate_1.default.fromFileAsync(file2Path);
             const sheet_p = workbook_p.activeSheet();
@@ -88,112 +87,112 @@ function innerLoop(arr, fullName, startingIndex, sheet) {
     const columns = new Array(12).fill(0);
     for (let i = 1; i < arr.length; i++) {
         const data = arr[i];
-        const bookingOfficeCode = data.A;
-        const dataFileFullName = data.D.split(' ')[0];
+        const bookingOfficeCode = data.B;
+        const dataFileFullName = data.A.split(' ')[0];
         const pol = data.C;
         //const eMedia: string = data?.F as string;
-        const eMedia = data === null || data === void 0 ? void 0 : data.E;
+        const eMedia = data === null || data === void 0 ? void 0 : data.D;
         if (fullName === dataFileFullName) {
             if (bookingOfficeCode === 'VAN') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[1] += data.F;
-                    columns[2] += data.K;
+                    columns[1] += data.E;
+                    columns[2] += data.F;
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'PRR') {
-                    columns[0] += data.F;
-                    columns[2] += data.K;
+                    columns[0] += data.E;
+                    columns[2] += data.F;
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F;
-                    columns[11] += data.K;
+                    columns[9] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'MTR') {
-                    columns[1] += data.F;
-                    columns[2] += data.K;
+                    columns[1] += data.E;
+                    columns[2] += data.F;
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'HAL') {
-                    columns[1] += data.F;
-                    columns[2] += data.K;
+                    columns[1] += data.E;
+                    columns[2] += data.F;
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
             }
             else if (bookingOfficeCode === 'MTR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[4] += data.F;
-                    columns[5] += data.K;
+                    columns[4] += data.E;
+                    columns[5] += data.F;
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'PRR') {
-                    columns[3] += data.F;
-                    columns[5] += data.K;
+                    columns[3] += data.E;
+                    columns[5] += data.F;
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F;
-                    columns[11] += data.K;
+                    columns[9] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'MTR') {
-                    columns[4] += data.F;
-                    columns[5] += data.K;
+                    columns[4] += data.E;
+                    columns[5] += data.F;
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'HAL') {
-                    columns[4] += data.F;
-                    columns[5] += data.K;
+                    columns[4] += data.E;
+                    columns[5] += data.F;
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
             }
             else if (bookingOfficeCode === 'TOR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[7] += data.F;
-                    columns[8] += data.K;
+                    columns[7] += data.E;
+                    columns[8] += data.F;
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'PRR') {
-                    columns[6] += data.F;
-                    columns[8] += data.K;
+                    columns[6] += data.E;
+                    columns[8] += data.F;
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F;
-                    columns[11] += data.K;
+                    columns[9] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'MTR') {
-                    columns[7] += data.F;
-                    columns[8] += data.K;
+                    columns[7] += data.E;
+                    columns[8] += data.F;
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
                 if (!eMedia && pol === 'HAL') {
-                    columns[7] += data.F;
-                    columns[8] += data.K;
+                    columns[7] += data.E;
+                    columns[8] += data.F;
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F;
-                    columns[11] += data.K;
+                    columns[10] += data.E;
+                    columns[11] += data.F;
                 }
             }
         }

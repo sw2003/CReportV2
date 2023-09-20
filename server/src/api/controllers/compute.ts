@@ -14,14 +14,9 @@ interface shipData {
     A: string;
     B: string;
     C: string;
-    D: string;
-    E: string | undefined;
+    D: string | undefined;
+    E: number;
     F: number;
-    G: number;
-    H: number;
-    I: number;
-    J: number;
-    K: number;
 }
 
 // Globals
@@ -122,126 +117,126 @@ export function innerLoop(arr: shipData[], fullName: string, startingIndex: numb
 
     for (let i = 1; i < arr.length; i++) {
         const data: shipData = arr[i];
-        const bookingOfficeCode: string = data.A;
-        const dataFileFullName: string = data.D.split(' ')[0];
+        const bookingOfficeCode: string = data.B;
+        const dataFileFullName: string = data.A.split(' ')[0];
         const pol: string = data.C;
         //const eMedia: string = data?.F as string;
-        const eMedia: string = data?.E as string; 
+        const eMedia: string = data?.D as string; 
 
         if (fullName === dataFileFullName) {
             if (bookingOfficeCode === 'VAN') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[1] += data.F
-                    columns[2] += data.K
+                    columns[1] += data.E
+                    columns[2] += data.F
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[0] += data.F
-                    columns[2] += data.K
+                    columns[0] += data.E
+                    columns[2] += data.F
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F
-                    columns[11] += data.K
+                    columns[9] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[1] += data.F
-                    columns[2] += data.K
+                    columns[1] += data.E
+                    columns[2] += data.F
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[1] += data.F
-                    columns[2] += data.K
+                    columns[1] += data.E
+                    columns[2] += data.F
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
             }
             else if (bookingOfficeCode === 'MTR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[4] += data.F
-                    columns[5] += data.K
+                    columns[4] += data.E
+                    columns[5] += data.F
                 }
 
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[3] += data.F
-                    columns[5] += data.K
+                    columns[3] += data.E
+                    columns[5] += data.F
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F
-                    columns[11] += data.K
+                    columns[9] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[4] += data.F
-                    columns[5] += data.K
+                    columns[4] += data.E
+                    columns[5] += data.F
                 }
 
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[4] += data.F
-                    columns[5] += data.K
+                    columns[4] += data.E
+                    columns[5] += data.F
                 }
 
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
             }
             else if (bookingOfficeCode === 'TOR') {
                 if (!eMedia && pol === 'VAN') {
-                    columns[7] += data.F
-                    columns[8] += data.K
+                    columns[7] += data.E
+                    columns[8] += data.F
                 }
                 if (eMedia && pol === 'VAN') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'PRR') {
-                    columns[6] += data.F
-                    columns[8] += data.K
+                    columns[6] += data.E
+                    columns[8] += data.F
                 }
                 if (eMedia && pol === 'PRR') {
-                    columns[9] += data.F
-                    columns[11] += data.K
+                    columns[9] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'MTR') {
-                    columns[7] += data.F
-                    columns[8] += data.K
+                    columns[7] += data.E
+                    columns[8] += data.F
                 }
                 if (eMedia && pol === 'MTR') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
 
                 if (!eMedia && pol === 'HAL') {
-                    columns[7] += data.F
-                    columns[8] += data.K
+                    columns[7] += data.E
+                    columns[8] += data.F
                 }
                 if (eMedia && pol === 'HAL') {
-                    columns[10] += data.F
-                    columns[11] += data.K
+                    columns[10] += data.E
+                    columns[11] += data.F
                 }
             }
         }
